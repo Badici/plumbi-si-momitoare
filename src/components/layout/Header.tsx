@@ -41,16 +41,16 @@ export function Header() {
         className="absolute inset-0 -z-10 bg-[#F9F7F2]/70 backdrop-blur-xl"
         style={{ opacity: reduce ? 0.95 : headerBg }}
       />
-      <Container className="flex h-[4.25rem] items-center justify-between gap-4">
+      <Container className="flex h-[5.25rem] items-center justify-between gap-5 lg:h-[6.25rem]">
         <Link
           href="#acasa"
-          className="flex min-w-0 items-center gap-3 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
+          className="flex min-w-0 items-center gap-4 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
           onClick={() => setOpen(false)}
         >
-          <span className="relative block size-11 shrink-0 overflow-hidden rounded-full ring-1 ring-[#3D3028]/10 shadow-sm">
-            <Image src="/1.png" alt={`${BRAND_NAME} — logo`} fill className="object-cover" sizes="44px" priority />
+          <span className="relative block size-14 shrink-0 overflow-hidden lg:size-16">
+            <Image src="/logo-2.png" alt={`${BRAND_NAME} — logo`} fill className="object-contain p-1" sizes="64px" priority />
           </span>
-          <span className="font-heading hidden min-w-0 text-left text-sm font-semibold leading-tight tracking-tight text-[#3D3028] sm:block">
+          <span className="font-heading hidden min-w-0 text-left text-base font-semibold leading-tight tracking-tight text-[#3D3028] sm:block lg:text-lg">
             {BRAND_NAME}
           </span>
         </Link>
@@ -60,7 +60,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-3 py-2 text-sm font-medium text-[#3D3028]/80 transition hover:bg-[#3D3028]/[0.05] hover:text-[#3D3028] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
+              className="rounded-full px-4 py-2.5 text-base font-medium text-[#3D3028]/80 transition hover:bg-[#3D3028]/[0.05] hover:text-[#3D3028] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
             >
               {item.label}
             </Link>
@@ -68,17 +68,17 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <WhatsAppButton href={waHref} size="md" className="hidden sm:inline-flex shadow-none">
+          <WhatsAppButton href={waHref} size="lg" className="hidden sm:inline-flex shadow-none">
             Comandă pe WhatsApp
           </WhatsAppButton>
           <button
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-full border border-[#3D3028]/10 bg-white/70 text-[#3D3028] shadow-sm backdrop-blur lg:hidden"
+            className="inline-flex size-14 items-center justify-center rounded-full border border-[#3D3028]/10 bg-white/70 text-[#3D3028] shadow-sm backdrop-blur lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? <X className="size-6" /> : <Menu className="size-6" />}
             <span className="sr-only">Meniu</span>
           </button>
         </div>
@@ -94,7 +94,7 @@ export function Header() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Container className="flex flex-col gap-1 py-4">
+            <Container className="flex flex-col gap-2 py-6">
               {nav.map((item, i) => (
                 <motion.div
                   key={item.href}
@@ -104,7 +104,7 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="block rounded-2xl px-4 py-3 text-base font-medium text-[#3D3028] hover:bg-[#5B9291]/10"
+                    className="block rounded-2xl px-5 py-3.5 text-lg font-medium text-[#3D3028] hover:bg-[#355E3B]/10"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}

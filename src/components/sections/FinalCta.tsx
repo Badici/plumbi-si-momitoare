@@ -24,7 +24,7 @@ export function FinalCta() {
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute -left-24 top-0 size-72 rounded-full bg-[#A8D1D1]/20 blur-3xl"
+            className="pointer-events-none absolute -left-24 top-0 size-72 rounded-full bg-[#C4B98F]/20 blur-3xl"
           />
           <div
             aria-hidden

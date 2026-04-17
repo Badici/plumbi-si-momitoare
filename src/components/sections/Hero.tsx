@@ -35,12 +35,12 @@ export function Hero() {
     <section ref={ref} id="acasa" className="mesh-hero relative overflow-hidden pb-16 pt-10 sm:pb-20 sm:pt-14">
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -left-24 top-10 size-[420px] rounded-full bg-[#A8D1D1]/35 blur-3xl"
+        className="pointer-events-none absolute -left-24 top-10 size-[420px] rounded-full bg-[#C4B98F]/35 blur-3xl"
         style={{ y: y1 }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -right-20 bottom-0 size-[380px] rounded-full bg-[#5B9291]/20 blur-3xl"
+        className="pointer-events-none absolute -right-20 bottom-0 size-[380px] rounded-full bg-[#355E3B]/20 blur-3xl"
         style={{ y: y2 }}
       />
 
@@ -85,7 +85,7 @@ export function Hero() {
             </WhatsAppButton>
             <Link
               href="#produse"
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-[#3D3028]/15 bg-white/55 px-7 text-base font-semibold text-[#3D3028] backdrop-blur transition hover:border-[#5B9291]/40 hover:bg-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-[#3D3028]/15 bg-white/55 px-7 text-base font-semibold text-[#3D3028] backdrop-blur transition hover:border-[#355E3B]/40 hover:bg-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
             >
               Vezi produsele
               <ArrowRight className="size-4" aria-hidden />
@@ -118,7 +118,7 @@ export function Hero() {
           transition={{ duration: 0.75, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="relative mx-auto max-w-[520px]">
-            <div className="absolute inset-0 -z-10 rounded-[2.25rem] bg-gradient-to-br from-white/70 via-white/20 to-[#A8D1D1]/25 blur-sm" />
+            <div className="absolute inset-0 -z-10 rounded-[2.25rem] bg-gradient-to-br from-white/70 via-white/20 to-[#C4B98F]/25 blur-sm" />
             <div className="grid grid-cols-2 gap-4 rounded-[2.25rem] border border-[#3D3028]/10 bg-white/55 p-4 shadow-[0_30px_80px_-40px_rgba(61,48,40,0.45)] glass-panel sm:p-5">
               {collage.map((img, idx) => (
                 <motion.div

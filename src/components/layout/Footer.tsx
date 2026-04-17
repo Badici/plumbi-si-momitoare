@@ -21,8 +21,8 @@ export function Footer() {
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="relative block size-12 overflow-hidden rounded-full ring-1 ring-white/15">
-              <Image src="/1.png" alt="" fill className="object-cover" sizes="48px" />
+            <span className="relative block size-12 overflow-hidden">
+              <Image src="/logo-2.png" alt="" fill className="object-contain p-1" sizes="48px" />
             </span>
             <div>
               <p className="font-heading text-lg font-semibold tracking-tight">{BRAND_NAME}</p>

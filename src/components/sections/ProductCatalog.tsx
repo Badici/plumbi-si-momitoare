@@ -13,7 +13,7 @@ export function ProductCatalog() {
     <MotionSection id="produse" className="scroll-mt-28 py-16 sm:py-20">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#5B9291]">Catalog</p>
+          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#355E3B]">Catalog</p>
           <h2 className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
             Produsele noastre, gramaje și prețuri — la un scroll distanță.
           </h2>

@@ -42,7 +42,7 @@ export function Benefits() {
     <section className="py-16 sm:py-20" aria-labelledby="beneficii-heading">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#5B9291]">De ce noi</p>
+          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#355E3B]">De ce noi</p>
           <h2 id="beneficii-heading" className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
             Detalii mici care se văd mare pe apă.
           </h2>
@@ -56,9 +56,9 @@ export function Benefits() {
             const Icon = item.icon;
             return (
               <MotionItem key={item.title}>
-                <div className="h-full rounded-2xl border border-[#3D3028]/10 bg-white/60 p-6 shadow-[0_18px_60px_-44px_rgba(61,48,40,0.45)] glass-panel transition hover:-translate-y-0.5 hover:border-[#5B9291]/25">
-                  <div className="inline-flex size-11 items-center justify-center rounded-2xl bg-[#A8D1D1]/30 ring-1 ring-[#5B9291]/20">
-                    <Icon className="size-5 text-[#2F5C5B]" aria-hidden />
+                <div className="h-full rounded-2xl border border-[#3D3028]/10 bg-white/60 p-6 shadow-[0_18px_60px_-44px_rgba(61,48,40,0.45)] glass-panel transition hover:-translate-y-0.5 hover:border-[#355E3B]/25">
+                  <div className="inline-flex size-11 items-center justify-center rounded-2xl bg-[#C4B98F]/30 ring-1 ring-[#355E3B]/20">
+                    <Icon className="size-5 text-[#4B5A33]" aria-hidden />
                   </div>
                   <h3 className="font-heading mt-4 text-lg font-semibold tracking-tight text-[#3D3028]">{item.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-[#3D3028]/70">{item.text}</p>

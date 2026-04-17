@@ -20,8 +20,8 @@ export function WhatsAppButton({ href, className = "", size = "md", children, ..
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center rounded-full font-semibold text-white shadow-[0_12px_40px_-12px_rgba(91,146,145,0.55)] bg-[#5B9291] ring-1 ring-white/20 transition-colors hover:bg-[#4d7f7e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028] ${sizeCls} ${className}`}
-      whileHover={reduce ? undefined : { y: -1, boxShadow: "0 16px 44px -12px rgba(91,146,145,0.6)" }}
+      className={`inline-flex items-center justify-center rounded-full font-semibold text-white shadow-[0_12px_40px_-12px_rgba(53,94,59,0.56)] bg-[#355E3B] ring-1 ring-white/20 transition-colors hover:bg-[#264A2F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028] ${sizeCls} ${className}`}
+      whileHover={reduce ? undefined : { y: -1, boxShadow: "0 16px 44px -12px rgba(53,94,59,0.62)" }}
       whileTap={reduce ? undefined : { scale: 0.98 }}
       {...rest}
     >

@@ -38,26 +38,26 @@ export function About() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center">
           <div className="relative">
             <div className="relative overflow-hidden rounded-[1.75rem] border border-[#3D3028]/10 bg-white/60 shadow-[0_28px_80px_-50px_rgba(61,48,40,0.55)] glass-panel">
-              <div className="relative aspect-[5/4] w-full">
+              <div className="relative aspect-square w-full">
                 <Image
-                  src="/1.png"
-                  alt="Despre brand — emblemă circulară"
+                  src="/logo-2.png"
+                  alt="Despre brand — emblemă"
                   fill
-                  className="object-cover"
+                  className="object-contain p-5"
                   sizes="(max-width: 1024px) 100vw, 520px"
                 />
               </div>
             </div>
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute -bottom-8 -right-6 hidden size-40 rounded-full bg-[#A8D1D1]/35 blur-2xl lg:block"
+              className="pointer-events-none absolute -bottom-8 -right-6 hidden size-40 rounded-full bg-[#C4B98F]/35 blur-2xl lg:block"
               animate={reduce ? undefined : { opacity: [0.55, 0.85, 0.55] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
 
           <div>
-            <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#5B9291]">Despre noi</p>
+            <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#355E3B]">Despre noi</p>
             <h2 className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
               Produse făcute cu răbdare, pentru pescari care nu lasă nimic la voia întâmplării.
             </h2>
@@ -79,7 +79,7 @@ export function About() {
                     transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     className="rounded-2xl border border-[#3D3028]/10 bg-white/60 p-4 glass-panel"
                   >
-                    <Icon className="size-5 text-[#5B9291]" aria-hidden />
+                    <Icon className="size-5 text-[#355E3B]" aria-hidden />
                     <p className="font-heading mt-3 text-sm font-semibold text-[#3D3028]">{item.title}</p>
                     <p className="mt-2 text-sm leading-relaxed text-[#3D3028]/70">{item.text}</p>
                   </motion.div>

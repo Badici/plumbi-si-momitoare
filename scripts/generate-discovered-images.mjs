@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.join(__dirname, "../public");
 const outFile = path.join(__dirname, "../src/data/discovered-images.ts");
 
-const LOGO_FILES = new Set(["1.png"]);
+const LOGO_FILES = new Set(["1.png", "logo-2.png"]);
 
 function main() {
   const files = fs.existsSync(publicDir)

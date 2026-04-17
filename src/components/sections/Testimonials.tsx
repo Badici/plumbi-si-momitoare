@@ -27,7 +27,7 @@ export function Testimonials() {
     <section className="border-y border-[#3D3028]/[0.06] bg-white/35 py-16 sm:py-20" aria-labelledby="testimoniale-heading">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#5B9291]">Testimoniale</p>
+          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#355E3B]">Testimoniale</p>
           <h2 id="testimoniale-heading" className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
             Încrederea pescarilor contează mai mult decât orice slogan.
           </h2>

@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Paletă extrasă din logo (1.png) — outdoor premium */
+  /* Paletă extrasă din logo-2.png — forest/khaki premium */
   --color-brand-ink: #3d3028;
-  --color-brand-teal: #5b9291;
-  --color-brand-teal-light: #a8d1d1;
+  --color-brand-teal: #5f6f45;
+  --color-brand-teal-light: #c4b98f;
   --color-brand-bronze: #a67c52;
-  --color-brand-green: #6b8e4e;
+  --color-brand-green: #4f5e39;
   --color-brand-cream: #f9f7f2;
-  --color-brand-mist: #eef6f5;
+  --color-brand-mist: #f1eedf;
   --color-brand-deep: #2a2420;
   --glass-border: rgba(61, 48, 40, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.55);
@@ -56,8 +56,8 @@ body {
 
 .mesh-hero {
   background:
-    radial-gradient(ellipse 120% 80% at 10% 0%, rgba(91, 146, 145, 0.22), transparent 55%),
-    radial-gradient(ellipse 90% 70% at 90% 20%, rgba(168, 209, 209, 0.35), transparent 50%),
+    radial-gradient(ellipse 120% 80% at 10% 0%, rgba(53, 94, 59, 0.24), transparent 55%),
+    radial-gradient(ellipse 90% 70% at 90% 20%, rgba(196, 185, 143, 0.32), transparent 50%),
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(166, 124, 82, 0.12), transparent 45%),
     var(--color-brand-cream);
 }

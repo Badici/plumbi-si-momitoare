@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/1.png",
+        url: "/logo-2.png",
         alt: `${BRAND_NAME} — logo`,
       },
     ],
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${BRAND_NAME} — plumbi și momitoare premium`,
     description,
-    images: ["/1.png"],
+    images: ["/logo-2.png"],
   },
   robots: {
     index: true,
@@ -87,7 +87,7 @@ export default function RootLayout({
     name: BRAND_NAME,
     description,
     url: SITE_URL,
-    image: `${SITE_URL}/1.png`,
+    image: `${SITE_URL}/logo-2.png`,
     telephone: "+40-733-925-748",
     address: {
       "@type": "PostalAddress",

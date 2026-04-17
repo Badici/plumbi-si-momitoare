@@ -14,7 +14,7 @@ const cards = [
     href: "#momitoare",
     cta: "Vezi modele",
     image: "/momitoare-medii.png",
-    tint: "from-[#5B9291]/18 to-transparent",
+    tint: "from-[#355E3B]/18 to-transparent",
   },
   {
     title: "Plumbi",
@@ -33,7 +33,7 @@ export function CategoryShowcase() {
     <MotionSection className="py-16 sm:py-20">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#5B9291]">
+          <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#355E3B]">
             Categorii principale
           </p>
           <h2 className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
@@ -65,7 +65,7 @@ export function CategoryShowcase() {
                   <div>
                     <h3 className="font-heading text-2xl font-semibold tracking-tight text-[#3D3028]">{c.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-[#3D3028]/72">{c.desc}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#5B9291]">
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#355E3B]">
                       {c.cta}
                       <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>
