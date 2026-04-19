@@ -13,6 +13,12 @@ function orderMessage(productName: string, variantLabel: string) {
   return `Salut! Doresc să comand ${productName} - ${variantLabel}.`;
 }
 
+function orderMessagePlumbModel(productName: string) {
+  return `Salut! Doresc să comand ${productName}.`;
+}
+
+const GRAMAJE_COLLAPSE_THRESHOLD = 5;
+
 function ProductPhotoViewer({
   open,
   onClose,
@@ -128,8 +134,15 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
+  const isPlumbi = product.category === "plumbi";
+  const collapseGramaje = isPlumbi && product.variants.length >= GRAMAJE_COLLAPSE_THRESHOLD;
+
   const minPrice = useMemo(() => Math.min(...product.variants.map((v) => v.priceRon)), [product.variants]);
   const currentImage = product.images[imageIndex] ?? product.images[0];
+  const waPlumbHref = useMemo(
+    () => buildWhatsAppUrl(orderMessagePlumbModel(product.name)),
+    [product.name],
+  );
 
   return (
     <>
@@ -196,39 +209,88 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
               <p className="text-[0.7rem] font-semibold uppercase tracking-wider text-[#3D3028]/45">De la</p>
               <p className="font-heading text-xl font-semibold text-[#355E3B]">{formatRon(minPrice)}</p>
             </div>
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 rounded-full border border-[#3D3028]/10 bg-white/70 px-3 py-2 text-xs font-semibold text-[#3D3028] transition hover:border-[#355E3B]/35 sm:hidden"
-              aria-expanded={open}
-              onClick={() => setOpen((v) => !v)}
-            >
-              Variante
-              <ChevronDown className={`size-4 transition ${open ? "rotate-180" : ""}`} />
-            </button>
+            {!isPlumbi ? (
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-full border border-[#3D3028]/10 bg-white/70 px-3 py-2 text-xs font-semibold text-[#3D3028] transition hover:border-[#355E3B]/35 sm:hidden"
+                aria-expanded={open}
+                onClick={() => setOpen((v) => !v)}
+              >
+                Variante
+                <ChevronDown className={`size-4 transition ${open ? "rotate-180" : ""}`} />
+              </button>
+            ) : null}
           </div>
 
-          <div className={`mt-4 space-y-2 ${open ? "block" : "hidden"} sm:block`}>
-            {product.variants.map((v) => (
-              <div
-                key={v.id}
-                className="flex flex-col gap-2 rounded-xl border border-[#3D3028]/10 bg-white/55 p-3 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="flex items-center justify-between gap-3 sm:block">
-                  <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
-                    {v.label}
-                  </span>
-                  <p className="font-heading text-base font-semibold text-[#3D3028] sm:mt-2">{formatRon(v.priceRon)}</p>
-                </div>
-                <WhatsAppButton
-                  href={buildWhatsAppUrl(orderMessage(product.name, v.label))}
-                  size="md"
-                  className="w-full sm:w-auto shadow-none"
-                >
+          {isPlumbi ? (
+            <>
+              {collapseGramaje ? (
+                <details className="mt-4 rounded-xl border border-[#3D3028]/10 bg-white/40 px-3 py-2 open:[&_summary_.chev]:rotate-180">
+                  <summary className="cursor-pointer list-none py-2 text-sm font-semibold text-[#3D3028] [&::-webkit-details-marker]:hidden">
+                    <span className="flex items-center justify-between gap-2">
+                      Gramaje și prețuri ({product.variants.length})
+                      <ChevronDown className="chev size-4 shrink-0 transition" aria-hidden />
+                    </span>
+                  </summary>
+                  <ul className="space-y-2 border-t border-[#3D3028]/10 pb-2 pt-3">
+                    {product.variants.map((v) => (
+                      <li
+                        key={v.id}
+                        className="flex items-center justify-between gap-3 rounded-lg bg-white/55 px-3 py-2 text-sm"
+                      >
+                        <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
+                          {v.label}
+                        </span>
+                        <span className="font-heading font-semibold text-[#3D3028]">{formatRon(v.priceRon)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : (
+                <ul className="mt-4 space-y-2">
+                  {product.variants.map((v) => (
+                    <li
+                      key={v.id}
+                      className="flex items-center justify-between gap-3 rounded-xl border border-[#3D3028]/10 bg-white/55 px-3 py-2.5"
+                    >
+                      <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
+                        {v.label}
+                      </span>
+                      <span className="font-heading text-base font-semibold text-[#3D3028]">{formatRon(v.priceRon)}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="mt-4">
+                <WhatsAppButton href={waPlumbHref} size="md" className="w-full shadow-none sm:w-auto">
                   Comandă
                 </WhatsAppButton>
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <div className={`mt-4 space-y-2 ${open ? "block" : "hidden"} sm:block`}>
+              {product.variants.map((v) => (
+                <div
+                  key={v.id}
+                  className="flex flex-col gap-2 rounded-xl border border-[#3D3028]/10 bg-white/55 p-3 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div className="flex items-center justify-between gap-3 sm:block">
+                    <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
+                      {v.label}
+                    </span>
+                    <p className="font-heading text-base font-semibold text-[#3D3028] sm:mt-2">{formatRon(v.priceRon)}</p>
+                  </div>
+                  <WhatsAppButton
+                    href={buildWhatsAppUrl(orderMessage(product.name, v.label))}
+                    size="md"
+                    className="w-full sm:w-auto shadow-none"
+                  >
+                    Comandă
+                  </WhatsAppButton>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </motion.article>
 

@@ -10,7 +10,7 @@ import { MotionSection } from "@/components/ui/MotionSection";
 const cards = [
   {
     title: "Momitoare",
-    desc: "Nadire curată, eliberare controlată și profiluri pentru orice tactică — de la ușoare la longcast.",
+    desc: "Momitoare cu o rezistență mecanică deosebită, echipate cu tijă rezistență ridicată la rupere, toate acoperite cu un strat indestructibil la șocuri mecanice.",
     href: "#momitoare",
     cta: "Vezi modele",
     image: "/momitoare-medii.png",
@@ -18,11 +18,19 @@ const cards = [
   },
   {
     title: "Plumbi",
-    desc: "De la inline și para la trident și sondare — stabilitate, feedback clar și monturi demne de concurs.",
+    desc: "Cea mai largă varietate de modele, adaptate pentru orice stil de pescuit, de la pescuit lansat până la pescuit plantat, cu control foarte atent al calității și finisajelor.",
     href: "#plumbi",
     cta: "Vezi modele",
     image: "/plumb-fix-tija.png",
     tint: "from-[#A67C52]/16 to-transparent",
+  },
+  {
+    title: "Coșulețe feeder",
+    desc: "Coșulețe pentru monturi feeder, atât pentru lacuri cât și pentru ape curgătoare.",
+    href: "#cosulete-feeder",
+    cta: "Vezi modele",
+    image: "/cosulet-fata.png",
+    tint: "from-[#5a6d42]/20 to-transparent",
   },
 ];
 
@@ -37,7 +45,8 @@ export function CategoryShowcase() {
             Categorii principale
           </p>
           <h2 className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
-            Tot ce ai nevoie pentru montură și nadire, într-un singur loc.
+            Tot ce ai nevoie pentru montură și nădire, într-un singur loc.
+       
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-[#3D3028]/70">
             Alege categoria — apoi explorează modelele, gramajele și prețurile. Comanda se face rapid, direct pe
@@ -45,7 +54,7 @@ export function CategoryShowcase() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="mx-auto mt-12 flex max-w-4xl flex-col gap-5">
           {cards.map((c) => (
             <motion.div
               key={c.title}
@@ -56,29 +65,27 @@ export function CategoryShowcase() {
             >
               <Link
                 href={c.href}
-                className="group relative block overflow-hidden rounded-[1.75rem] border border-[#3D3028]/10 bg-white/55 p-6 shadow-[0_24px_70px_-50px_rgba(61,48,40,0.55)] glass-panel sm:p-8"
+                className="group relative flex flex-row items-center gap-4 overflow-hidden rounded-[1.5rem] border border-[#3D3028]/10 bg-white/55 p-4 shadow-[0_24px_70px_-50px_rgba(61,48,40,0.55)] glass-panel sm:gap-8 sm:p-7"
               >
                 <div
-                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${c.tint} opacity-90 transition group-hover:opacity-100`}
+                  className={`pointer-events-none absolute inset-0 bg-gradient-to-r ${c.tint} opacity-90 transition group-hover:opacity-100`}
                 />
-                <div className="relative grid gap-8 sm:grid-cols-[minmax(0,1fr)_200px] sm:items-center">
-                  <div>
-                    <h3 className="font-heading text-2xl font-semibold tracking-tight text-[#3D3028]">{c.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[#3D3028]/72">{c.desc}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#355E3B]">
-                      {c.cta}
-                      <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </span>
-                  </div>
-                  <div className="relative mx-auto aspect-square w-full max-w-[220px] sm:mx-0 sm:max-w-none">
-                    <Image
-                      src={c.image}
-                      alt={c.title}
-                      fill
-                      className="object-contain p-2 transition duration-500 group-hover:scale-[1.03]"
-                      sizes="(max-width: 1024px) 70vw, 320px"
-                    />
-                  </div>
+                <div className="relative flex min-w-0 flex-1 flex-col justify-center py-0.5 sm:py-1">
+                  <h3 className="font-heading text-lg font-semibold tracking-tight text-[#3D3028] sm:text-2xl">{c.title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-[#3D3028]/72 sm:mt-3 sm:text-sm">{c.desc}</p>
+                  <span className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-[#355E3B] sm:mt-4 sm:text-sm">
+                    {c.cta}
+                    <ArrowUpRight className="size-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:size-4" />
+                  </span>
+                </div>
+                <div className="relative h-28 w-28 shrink-0 sm:h-40 sm:w-44 md:h-44 md:w-48">
+                  <Image
+                    src={c.image}
+                    alt={c.title}
+                    fill
+                    className="object-contain p-1.5 transition duration-500 group-hover:scale-[1.03] sm:p-2"
+                    sizes="(max-width: 640px) 112px, 192px"
+                  />
                 </div>
               </Link>
             </motion.div>

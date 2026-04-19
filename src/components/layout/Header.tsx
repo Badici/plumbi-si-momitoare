@@ -13,6 +13,7 @@ const nav = [
   { href: "#acasa", label: "Acasă" },
   { href: "#momitoare", label: "Momitoare" },
   { href: "#plumbi", label: "Plumbi" },
+  { href: "#cosulete-feeder", label: "Coșulețe feeder" },
   { href: "#despre", label: "Despre noi" },
   { href: "#contact", label: "Contact" },
 ];

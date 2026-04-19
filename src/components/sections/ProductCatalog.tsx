@@ -7,6 +7,7 @@ import { ProductCard } from "./ProductCard";
 
 export function ProductCatalog() {
   const momitoare = getProductsByCategory("momitoare");
+  const cosuleteFeeder = getProductsByCategory("cosulete-feeder");
   const plumbi = getProductsByCategory("plumbi");
 
   return (
@@ -17,10 +18,7 @@ export function ProductCatalog() {
           <h2 className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
             Produsele noastre, gramaje și prețuri — la un scroll distanță.
           </h2>
-          <p className="mt-4 text-pretty text-base leading-relaxed text-[#3D3028]/70">
-            Imaginile sunt sincronizate automat cu fișierele PNG din folderul public. Pentru nume, descrieri, gramaje
-            și prețuri, editezi catalogul din proiect (fișierul de date dedicat din src/data).
-          </p>
+      
         </div>
 
         <section id="momitoare" className="scroll-mt-28 mt-14">
@@ -28,7 +26,7 @@ export function ProductCatalog() {
             <div>
               <h3 className="font-heading text-2xl font-semibold tracking-tight text-[#3D3028]">Momitoare</h3>
               <p className="mt-2 max-w-prose text-sm leading-relaxed text-[#3D3028]/70">
-                Coșulețe și momitoare pentru nadire precisă — de la ușoare la grele și longcast.
+                Momitoare pentru nadire precisă — de la ușoare la grele și longcast.
               </p>
             </div>
           </div>
@@ -50,6 +48,22 @@ export function ProductCatalog() {
           </div>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {plumbi.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+
+        <section id="cosulete-feeder" className="scroll-mt-28 mt-16 sm:mt-20">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h3 className="font-heading text-2xl font-semibold tracking-tight text-[#3D3028]">Coșulețe feeder</h3>
+              <p className="mt-2 max-w-prose text-sm leading-relaxed text-[#3D3028]/70">
+                Coșulețe dedicate monturilor feeder — robuste, precise la nădire și ușor de folosit pe apă.
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {cosuleteFeeder.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>

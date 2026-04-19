@@ -12,7 +12,7 @@ const items = [
   },
   {
     icon: Gauge,
-    title: "Gramaje precise",
+    title: "Gramaje garantate",
     text: "Control atent al greutății — esențial pentru distanță, nadire și prezentare.",
   },
   {

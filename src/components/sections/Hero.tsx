@@ -52,7 +52,7 @@ export function Hero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            Outdoor · precizie · livrare rapidă
+            Calitate · Promptitudine · Livrare rapidă
           </motion.p>
 
           <motion.h1
@@ -70,7 +70,7 @@ export function Hero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
-            Materiale alese, gramaje verificate și finisaje curate — pentru monturi sigure, nadire controlată și
+            Materiale alese, gramaje verificate și finisaje curate — pentru monturi sigure, pescuit precis și
             încredere în fiecare aruncare.
           </motion.p>
 
@@ -99,9 +99,9 @@ export function Hero() {
             transition={{ duration: 0.65, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
           >
             {[
-              { k: "Precizie", v: "gramaje atente" },
-              { k: "Calitate", v: "finisaj premium" },
-              { k: "Comandă", v: "direct pe WhatsApp" },
+              { k: "Precizie", v: "Gramaje garantate" },
+              { k: "Calitate", v: "Finisaj premium" },
+              { k: "Comandă", v: "Direct pe WhatsApp" },
             ].map((row) => (
               <div key={row.k} className="rounded-2xl border border-[#3D3028]/10 bg-white/45 p-3 glass-panel sm:p-4">
                 <dt className="text-[0.7rem] font-semibold uppercase tracking-wider text-[#3D3028]/55">{row.k}</dt>
@@ -139,7 +139,7 @@ export function Hero() {
               ))}
             </div>
             <div className="pointer-events-none absolute -bottom-6 left-1/2 hidden w-[min(92%,520px)] -translate-x-1/2 rounded-full bg-[#3D3028]/10 px-6 py-3 text-center text-xs font-medium text-[#3D3028]/70 sm:block">
-              Colaj reprezentativ — modele disponibile în catalog.
+              Colaj reprezentativ — modele disponibile în site-ul nostru.
             </div>
           </div>
         </motion.div>
