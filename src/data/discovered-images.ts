@@ -12,7 +12,6 @@ export const DISCOVERED_PRODUCT_PNGS = [
   "plumb-bag.png",
   "plumb-fix-tija.png",
   "plumb-fix-vartej.png",
-  "plumb-inline-fara-tija.png",
   "plumb-para-inline.png",
   "plumb-para.png",
   "plumb-pasta-longcast.png",

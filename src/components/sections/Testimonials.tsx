@@ -6,18 +6,18 @@ import { MotionItem, MotionStagger } from "@/components/ui/MotionSection";
 
 const quotes = [
   {
-    name: "Andrei P.",
-    role: "Feeder · Dunăre",
-    text: "Momitoarele se deschid uniform, iar plumbii stau cum trebuie pe fund. Comanda pe WhatsApp a fost clară și rapidă.",
+    name: "Rareș Bădici",
+    role: "Crap · Feeder",
+    text: "Am folosit momitoarele la mai multe partide de pescuit, atât de plăcere cât și în concurs. Sunt foarte încântat de rezistența lor, încă le am după 4 partide în aceleași condiții ca la momentul achiziției! Mulțumesc frumos!",
   },
   {
-    name: "Cătălin M.",
-    role: "Crap · lac privat",
+    name: "Dan Niculae",
+    role: "Crap",
     text: "Se simte grija la finisaj. Am regăsit aceeași greutate între bucăți — lucru rar și foarte apreciat.",
   },
   {
-    name: "Radu I.",
-    role: "Stationar · noapte",
+    name: "Andrei Nectarie",
+    role: "Feeder · Crap",
     text: "Îmi place cum arată montura și cum se comportă la lansări repetate. Livrare promptă, recomand cu încredere.",
   },
 ];

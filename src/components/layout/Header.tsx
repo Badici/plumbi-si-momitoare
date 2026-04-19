@@ -42,7 +42,7 @@ export function Header() {
         className="absolute inset-0 -z-10 bg-[#F9F7F2]/70 backdrop-blur-xl"
         style={{ opacity: reduce ? 0.95 : headerBg }}
       />
-      <Container className="flex h-[5.25rem] items-center justify-between gap-5 lg:h-[6.25rem]">
+      <Container className="flex h-[5.25rem] !max-w-screen-2xl items-center justify-between gap-3 lg:h-[6.25rem] lg:gap-4 xl:!max-w-[min(100%,90rem)] xl:gap-6 xl:px-10">
         <Link
           href="#acasa"
           className="flex min-w-0 items-center gap-4 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
@@ -56,12 +56,12 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Principal">
+        <nav className="hidden shrink-0 flex-nowrap items-center gap-0.5 lg:flex xl:gap-1.5" aria-label="Principal">
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-4 py-2.5 text-base font-medium text-[#3D3028]/80 transition hover:bg-[#3D3028]/[0.05] hover:text-[#3D3028] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
+              className="whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium text-[#3D3028]/80 transition hover:bg-[#3D3028]/[0.05] hover:text-[#3D3028] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028] xl:px-3.5 xl:text-base"
             >
               {item.label}
             </Link>
@@ -69,7 +69,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <WhatsAppButton href={waHref} size="lg" className="hidden sm:inline-flex shadow-none">
+          <WhatsAppButton href={waHref} size="lg" className="hidden shrink-0 whitespace-nowrap sm:inline-flex shadow-none">
             Comandă pe WhatsApp
           </WhatsAppButton>
           <button

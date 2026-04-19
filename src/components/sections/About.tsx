@@ -15,12 +15,12 @@ const points = [
   {
     icon: Weight,
     title: "Precizie la gramaj",
-    text: "Verificări atente și consistență lot-la-lot — pentru aruncări predictibile și prezentări curate ale nădei.",
+    text: "Verificări atente lot-la-lot — pentru lanseuri precise și prezentări curate ale monturii.",
   },
   {
     icon: ShieldCheck,
     title: "Seriozitate",
-    text: "Comunicare directă, livrare rapidă și suport la alegerea modelului potrivit pentru apă și specie.",
+    text: "Comunicare directă, livrare rapidă și suport la alegerea modelului potrivit pentru specificul partidei de pescuit.",
   },
   {
     icon: Leaf,

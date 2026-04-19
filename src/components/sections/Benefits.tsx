@@ -18,7 +18,7 @@ const items = [
   {
     icon: Leaf,
     title: "Design eficient",
-    text: "Forme gândite pentru apă reală: de la fund lin la vegetație și structuri discrete.",
+    text: "Forme gândite pentru condiții reale: de la substrat tare la mâl și vegetație.",
   },
   {
     icon: Shield,
@@ -44,7 +44,8 @@ export function Benefits() {
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-[#355E3B]">De ce noi</p>
           <h2 id="beneficii-heading" className="font-heading mt-3 text-balance text-3xl font-semibold tracking-tight text-[#3D3028] sm:text-4xl">
-            Detalii mici care se văd mare pe apă.
+            Detalii mici care fac diferențe mari pe apă.
+       
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-[#3D3028]/70">
             Îmbinăm estetica unui brand modern cu rigoarea unui producător care știe ce înseamnă o partidă bună.
