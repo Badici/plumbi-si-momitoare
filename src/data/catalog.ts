@@ -67,7 +67,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Coșuleț Lake mini",
     shortDescription:
       "Cosulet clasic pentru pescuit la feeder.",
-    images: keepDiscovered(["cosulet-fata.png", "cosulet-spate.png"]),
+    images: ["/new_photos/cosulet lake mini.png"],
     category: "cosulete-feeder",
     badge: "Lake",
     variants: [
@@ -82,7 +82,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Coșulețul clasic pentru pescuit la feeder, de dimensiuni medii.",
  
-    images: keepDiscovered(["cosulet-fata.png", "cosulet-spate.png"]),
+    images: ["/new_photos/cosulet lake mediu.png"],
     category: "cosulete-feeder",
     badge: "Lake",
     variants: [
@@ -97,7 +97,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Model River, optimizat cu 4 țepi pe talpă pentru aderență și stabilitate în curent.",
  
-    images: keepDiscovered(["cosulet-spate.png", "cosulet-fata.png"]),
+    images: ["/new_photos/cosulate river 1.png", "/new_photos/cosulet river 2.png"],
     category: "cosulete-feeder",
     badge: "Feeder",
     variants: [
@@ -112,7 +112,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitoare rotunde mici",
     shortDescription:
       "Momitoare rotunde compacte, ideale pentru nadire precisă și lansări în zona apropiată — echilibru bun între volum și control.",
-    images: keepDiscovered(["momitoare-medii.png"]),
+    images: ["/new_photos/momitoare rotunde mici.png"],
     category: "momitoare",
     variants: [
       { id: "mrm-38", label: "38 g", priceRon: 5 },
@@ -124,7 +124,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitoare rotunde mari",
     shortDescription:
       "Momitoare rotunde cu volum mai mare de nadă, pentru sesiuni în care vrei să ții mai multă momeală pe vad.",
-    images: keepDiscovered(["momitoare-medii.png"]),
+    images: ["/new_photos/momitoare rotunde mari.png"],
     category: "momitoare",
     variants: [
       { id: "mrmar-60", label: "60 g", priceRon: 5.4 },
@@ -137,7 +137,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Profil conic, cu spațiu generos pentru nadă și cu o așezare foarte bună pe substrat datorită formei.",
  
-    images: keepDiscovered(["momitoare-grele.png"]),
+    images: ["/new_photos/momitoare conice.png"],
     category: "momitoare",
     badge: "Lansare",
     variants: [
@@ -151,7 +151,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitoare cilindrice",
     shortDescription:
       "Profil cilindric, ușor de umplut și controlat la lansare — potrivite pentru lansete mai ușoare și monturi fine.",
-    images: keepDiscovered(["momitoare-usoare.png"]),
+    images: ["/new_photos/momitoare cilindrice.png"],
     category: "momitoare",
     variants: [
       { id: "mci-38", label: "38 g", priceRon: 5 },
@@ -163,7 +163,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitoare longcast",
     shortDescription:
       "Model optimizat pentru distanță maximă și traiectorie curată.",
-    images: keepDiscovered(["momitoare-longcast.png"]),
+    images: ["/new_photos/momitoare longcast.png"],
     category: "momitoare",
     variants: [
       { id: "ml-38", label: "38 g", priceRon: 5 },
@@ -176,7 +176,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitoare cu placă",
     shortDescription:
       "Construite pe un profil apropiat de method, cu placă pentru stabilitate și poziționare bună în curenți sau pe fund variat.",
-    images: keepDiscovered(["momitoare-dunare.png"]),
+    images: ["/new_photos/momitoare cu placa.png"],
     category: "momitoare",
     variants: [
       { id: "mp-100", label: "100 g", priceRon: 7 },
@@ -188,7 +188,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitor method pellet",
     shortDescription:
       "Construcție cu trei arcade pentru eliberare rapidă a nădei — recomandată la început de partidă pentru crearea patului de nadă.",
-    images: keepDiscovered(["momitoare-3-spite.png"]),
+    images: ["/new_photos/momitoare method pellet.png"],
     category: "momitoare",
     variants: [{ id: "mmp-35", label: "35 g", priceRon: 5 }],
   },
@@ -198,7 +198,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Clasicul plumb inline cu tijă rigidă și autoînțepare",
 
-    images: keepDiscovered(["7.png"]),
+    images: ["/new_photos/plumbi inline.png"],
     category: "plumbi",
     badge: "Distanță",
     variants: [
@@ -217,7 +217,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Cel mai folosit plumb pentru montură cu plumb pierdut.",
 
-    images: keepDiscovered(["plumb-fix-vartej.png"]),
+    images: ["/new_photos/plumb fix cu vartej hexagonal.png"],
     category: "plumbi",
     variants: [
       { id: "pfvh-70", label: "70 g", priceRon: 4.7 },
@@ -236,7 +236,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Plumb folosit pentru lansări la distanțe foarte mari, cu un profil rotund care permite o așezare foarte bună pe substrat.",
 
-    images: keepDiscovered(["plumb-fix-vartej.png"]),
+    images: ["/new_photos/plumb fix cu vartej rotund.png"],
     category: "plumbi",
     variants: [
       { id: "pfvr-80", label: "80 g", priceRon: 4.8 },
@@ -255,7 +255,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Cel mai bun și cel mai folosit plumb fix pentru montură elicopter și pescuit în mâl, acesta fiind recunoscut pentru ieșirea rapidă din mâl.",
 
-    images: keepDiscovered(["plumbi-lacrima.png"]),
+    images: ["/new_photos/plumb fix conic.png"],
     category: "plumbi",
     variants: [
       { id: "pfc-105", label: "105 g", priceRon: 5 },
@@ -270,7 +270,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Plumb folosit pentru pescuitul în substrat mâlos, la care tija metalică ajută la eliberarea acestuia din mâl și oferă o stabilitate foarte bună în lanseu.",
 
-    images: keepDiscovered(["plumb-fix-tija.png"]),
+    images: ["/new_photos/plumb fix cu tija.png"],
     category: "plumbi",
     badge: "Precizie",
     variants: [
@@ -289,7 +289,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Plumb Grippa cu vârtej",
     shortDescription:
       "Clasicul plumb pierdut destinat pescuitului plantat.",
-    images: keepDiscovered(["plumb-para.png"]),
+    images: ["/new_photos/plumb grippa cu vartej.png"],
     category: "plumbi",
     variants: [
       { id: "pp-90", label: "90 g", priceRon: 5.8 },
@@ -309,7 +309,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Poate cel mai evoluat plumb pentru pescuitul plantat cât și pescuitul pe râuri.",
 
-    images: keepDiscovered(["plumb-para-inline.png"]),
+    images: ["/new_photos/plumb grippa inline.png"],
     category: "plumbi",
     variants: [
       { id: "ppi-66", label: "66 g", priceRon: 5 },
@@ -329,7 +329,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Plumb pastă",
     shortDescription:
       "Plumb special conceput pentru utilizare cu pastă, cu aderență foarte bună.",
-    images: keepDiscovered(["plumb-pasta.png"]),
+    images: ["/new_photos/plumb pasta.png"],
     category: "plumbi",
     variants: [
       { id: "ppa-1", label: "60 g", priceRon: 5 },
@@ -342,7 +342,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Plumb pastă longcast",
     shortDescription:
       "Plumb pentru utilizare cu pastă, optimizat pentru lanseuri la distanță și stabilitate la lansare.",
-    images: keepDiscovered(["plumb-pasta-longcast.png"]),
+    images: ["/new_photos/plumb pasta longcast.png"],
     category: "plumbi",
     badge: "Versatil",
     variants: [
@@ -357,7 +357,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     shortDescription:
       "Cel mai evoluat plumb de pastă cu o ridicare foarte rapidă de pe substrat și recuperare foarte ușoară. Disponibil cu tijă rigidă sau cu insert cauciuc.",
 
-    images: keepDiscovered(["plumbi-trident-1.png", "plumbi-trident-2.png"]),
+    images: ["/new_photos/plumb pasta tip paste bomb.png"],
     category: "plumbi",
     variants: [{ id: "pt-60", label: "86 g", priceRon: 10 }],
   },
@@ -366,7 +366,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Plumb pentru bag",
     shortDescription:
       "Clasicul plumb pentru bag, cu cea mai mare plaja de gramaje.",
-    images: keepDiscovered(["plumb-bag.png"]),
+    images: ["/new_photos/plumbi bag.png"],
     category: "plumbi",
     variants: [
       { id: "pb-50", label: "50 g", priceRon: 4 },
@@ -385,7 +385,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Plumb pentru sondare",
     shortDescription:
       "Profil dedicat explorării substratului: feedback clar, formă care citește structura și textura substratului. Ideal pentru feeder si crap.",
-    images: keepDiscovered(["plumb-sondare.png"]),
+    images: ["/new_photos/plumbi pentru sondare.png"],
     category: "plumbi",
     variants: [
       { id: "ps-40", label: "40 g", priceRon: 5 },
@@ -454,8 +454,9 @@ function getInferredProducts(): ProductSeed[] {
 }
 
 export function getCatalog(): CatalogProduct[] {
-  return [...PRODUCT_SEEDS, ...getInferredProducts()]
+  return [...PRODUCT_SEEDS]
     .filter((p) => p.images.length > 0)
+    .filter((p) => p.images.every((img) => img.startsWith("/new_photos/")))
     .map((seed) => ({
       id: seed.slug,
       slug: seed.slug,
