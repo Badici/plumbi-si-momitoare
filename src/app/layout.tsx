@@ -65,6 +65,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  icons: {
+    icon: "/logo-2.ico",
+    shortcut: "/logo-2.ico",
+  },
 };
 
 export const viewport: Viewport = {
