@@ -64,11 +64,45 @@ export default function Home() {
       url: `${SITE_URL}/#${product.category}`,
     })),
   };
+  const productListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Produse Fishleads - plumbi și momitoare",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: catalog.length,
+    itemListElement: catalog.map((product, index) => {
+      const lowestPrice = Math.min(...product.variants.map((variant) => variant.priceRon));
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Product",
+          name: product.name,
+          description: product.shortDescription,
+          image: product.images.map((img) => `${SITE_URL}${img}`),
+          category: product.category,
+          sku: product.slug,
+          brand: {
+            "@type": "Brand",
+            name: BRAND_NAME,
+          },
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "RON",
+            price: lowestPrice.toFixed(2),
+            availability: "https://schema.org/InStock",
+            url: `${SITE_URL}/#${product.category}`,
+          },
+        },
+      };
+    }),
+  };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productListJsonLd) }} />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#3D3028] focus:shadow-lg"

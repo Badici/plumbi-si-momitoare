@@ -20,6 +20,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: BRAND_NAME,
   title: {
     default: `${BRAND_NAME} | Plumbi și momitoare premium pentru pescuit`,
     template: `%s | ${BRAND_NAME}`,
@@ -61,10 +62,20 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   alternates: {
     canonical: SITE_URL,
   },
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: "/logo-2.ico",
     shortcut: "/logo-2.ico",
