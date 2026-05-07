@@ -69,8 +69,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <WhatsAppButton href={waHref} size="lg" className="hidden shrink-0 whitespace-nowrap sm:inline-flex shadow-none">
-            Comandă pe WhatsApp
+          <WhatsAppButton
+            href={waHref}
+            size="lg"
+            className="inline-flex shrink-0 whitespace-nowrap shadow-none max-[429px]:min-h-11 max-[429px]:gap-0 max-[429px]:px-3.5 max-[429px]:[&_svg]:size-6"
+          >
+            <span className="max-[429px]:sr-only">Comandă pe WhatsApp</span>
           </WhatsAppButton>
           <button
             type="button"
