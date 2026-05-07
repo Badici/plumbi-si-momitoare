@@ -128,6 +128,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     category: "momitoare",
     variants: [
       { id: "mrmar-60", label: "60 g", priceRon: 5.4 },
+      { id: "mrmar-70", label: "70 g", priceRon: 5.6 },
       { id: "mrmar-80", label: "80 g", priceRon: 5.8 },
     ],
   },
@@ -141,8 +142,8 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     category: "momitoare",
     badge: "Lansare",
     variants: [
-      { id: "mc-60", label: "60 g", priceRon: 5.4 },
-      { id: "mc-70", label: "70 g", priceRon: 5.6 },
+      { id: "mc-60", label: "38 g", priceRon: 5 },
+      { id: "mc-80", label: "60 g", priceRon: 5.2 },
     ],
   },
   {
