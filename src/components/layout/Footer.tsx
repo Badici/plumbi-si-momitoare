@@ -4,12 +4,13 @@ import { Container } from "@/components/ui/Container";
 import { BRAND_NAME, WHATSAPP_DISPLAY, buildWhatsAppUrl } from "@/data/site";
 
 const quick = [
-  { href: "#acasa", label: "Acasă" },
-  { href: "#momitoare", label: "Momitoare" },
-  { href: "#plumbi", label: "Plumbi" },
-  { href: "#cosulete-feeder", label: "Coșulețe feeder" },
-  { href: "#despre", label: "Despre noi" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#acasa", label: "Acasă" },
+  { href: "/cos", label: "Coș" },
+  { href: "/#momitoare", label: "Momitoare" },
+  { href: "/#plumbi", label: "Plumbi" },
+  { href: "/#cosulete-feeder", label: "Coșulețe feeder" },
+  { href: "/#despre", label: "Despre noi" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const legalLinks = [

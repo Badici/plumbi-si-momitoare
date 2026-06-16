@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
+import { AppProviders } from "@/components/providers/AppProviders";
 import { BRAND_NAME, SITE_URL } from "@/data/site";
 
 const manrope = Manrope({
@@ -116,7 +117,7 @@ export default function RootLayout({
     <html lang="ro" className={`${manrope.variable} ${sora.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        {children}
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

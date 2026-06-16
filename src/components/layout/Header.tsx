@@ -4,18 +4,20 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { useCart } from "@/components/cart/CartContext";
 import { Container } from "@/components/ui/Container";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { BRAND_NAME, buildWhatsAppUrl } from "@/data/site";
 
 const nav = [
-  { href: "#acasa", label: "Acasă" },
-  { href: "#momitoare", label: "Momitoare" },
-  { href: "#plumbi", label: "Plumbi" },
-  { href: "#cosulete-feeder", label: "Coșulețe feeder" },
-  { href: "#despre", label: "Despre noi" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#acasa", label: "Acasă" },
+  { href: "/#momitoare", label: "Momitoare" },
+  { href: "/#plumbi", label: "Plumbi" },
+  { href: "/#cosulete-feeder", label: "Coșulețe feeder" },
+  { href: "/#despre", label: "Despre noi" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const defaultOrderMsg =
@@ -24,6 +26,7 @@ const defaultOrderMsg =
 export function Header() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
+  const { totalItems, isHydrated } = useCart();
   const { scrollY } = useScroll();
   const headerBg = useTransform(scrollY, [0, 80], [0.55, 0.92]);
 
@@ -44,7 +47,7 @@ export function Header() {
       />
       <Container className="flex h-[5.25rem] !max-w-screen-2xl items-center justify-between gap-3 lg:h-[6.25rem] lg:gap-4 xl:!max-w-[min(100%,90rem)] xl:gap-6 xl:px-10">
         <Link
-          href="#acasa"
+          href="/#acasa"
           className="flex min-w-0 items-center gap-4 rounded-xl py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028]"
           onClick={() => setOpen(false)}
         >
@@ -69,6 +72,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <CartDrawer />
           <WhatsAppButton
             href={waHref}
             size="lg"
@@ -116,6 +120,14 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
+              <Link
+                href="/cos"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl border border-[#3D3028]/10 bg-white/75 px-5 py-3.5 text-base font-semibold text-[#3D3028]"
+                onClick={() => setOpen(false)}
+              >
+                <ShoppingCart className="size-5" />
+                Coș {isHydrated && totalItems > 0 ? `(${totalItems})` : ""}
+              </Link>
               <WhatsAppButton href={waHref} size="lg" className="mt-2 w-full sm:hidden">
                 Comandă pe WhatsApp
               </WhatsAppButton>

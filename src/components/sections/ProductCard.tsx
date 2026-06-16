@@ -2,20 +2,11 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { ChevronDown, Search, X, ZoomIn, ZoomOut } from "lucide-react";
+import { Check, ChevronDown, Minus, Plus, Search, X, ZoomIn, ZoomOut } from "lucide-react";
 import { useMemo, useState } from "react";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { useCart } from "@/components/cart/CartContext";
 import type { CatalogProduct } from "@/data/catalog";
-import { buildWhatsAppUrl } from "@/data/site";
 import { formatRon } from "@/lib/format";
-
-function orderMessage(productName: string, variantLabel: string) {
-  return `Salut! Doresc să comand ${productName} - ${variantLabel}.`;
-}
-
-function orderMessagePlumbModel(productName: string) {
-  return `Salut! Doresc să comand ${productName}.`;
-}
 
 const GRAMAJE_COLLAPSE_THRESHOLD = 5;
 
@@ -130,19 +121,32 @@ function ProductPhotoViewer({
 
 export function ProductCard({ product }: { product: CatalogProduct }) {
   const reduce = useReducedMotion();
+  const { addItem } = useCart();
   const [open, setOpen] = useState(false);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
+  const [qtyByVariant, setQtyByVariant] = useState<Record<string, number>>({});
+  const [justAddedVariant, setJustAddedVariant] = useState<string | null>(null);
 
   const isPlumbi = product.category === "plumbi";
   const collapseGramaje = isPlumbi && product.variants.length >= GRAMAJE_COLLAPSE_THRESHOLD;
 
   const minPrice = useMemo(() => Math.min(...product.variants.map((v) => v.priceRon)), [product.variants]);
   const currentImage = product.images[imageIndex] ?? product.images[0];
-  const waPlumbHref = useMemo(
-    () => buildWhatsAppUrl(orderMessagePlumbModel(product.name)),
-    [product.name],
-  );
+  const getVariantQty = (variantId: string) => qtyByVariant[variantId] ?? 1;
+  const setVariantQty = (variantId: string, qty: number) => {
+    setQtyByVariant((prev) => ({ ...prev, [variantId]: Math.max(1, qty) }));
+  };
+  const handleAddToCart = (variantId: string) => {
+    addItem({ productId: product.id, variantId, quantity: getVariantQty(variantId) });
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("cart:item-added"));
+    }
+    setJustAddedVariant(variantId);
+    window.setTimeout(() => {
+      setJustAddedVariant((current) => (current === variantId ? null : current));
+    }, 1200);
+  };
 
   return (
     <>
@@ -236,12 +240,49 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
                     {product.variants.map((v) => (
                       <li
                         key={v.id}
-                        className="flex items-center justify-between gap-3 rounded-lg bg-white/55 px-3 py-2 text-sm"
+                        className="rounded-lg bg-white/55 px-3 py-2 text-sm"
                       >
-                        <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
-                          {v.label}
-                        </span>
-                        <span className="font-heading font-semibold text-[#3D3028]">{formatRon(v.priceRon)}</span>
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
+                            {v.label}
+                          </span>
+                          <span className="font-heading font-semibold text-[#3D3028]">{formatRon(v.priceRon)}</span>
+                        </div>
+                        <div className="mt-2 flex flex-wrap items-center justify-end gap-2">
+                          <div className="inline-flex items-center rounded-full border border-[#3D3028]/15 bg-white">
+                            <button
+                              type="button"
+                              className="inline-flex size-8 items-center justify-center text-[#3D3028]"
+                              onClick={() => setVariantQty(v.id, getVariantQty(v.id) - 1)}
+                              aria-label={`Scade cantitatea pentru ${product.name} ${v.label}`}
+                            >
+                              <Minus className="size-4" />
+                            </button>
+                            <span className="min-w-8 text-center text-sm font-semibold text-[#3D3028]">{getVariantQty(v.id)}</span>
+                            <button
+                              type="button"
+                              className="inline-flex size-8 items-center justify-center text-[#3D3028]"
+                              onClick={() => setVariantQty(v.id, getVariantQty(v.id) + 1)}
+                              aria-label={`Creste cantitatea pentru ${product.name} ${v.label}`}
+                            >
+                              <Plus className="size-4" />
+                            </button>
+                          </div>
+                          <button
+                            type="button"
+                            className="inline-flex min-h-9 items-center justify-center rounded-full bg-[#355E3B] px-4 text-xs font-semibold text-white transition hover:bg-[#264A2F]"
+                            onClick={() => handleAddToCart(v.id)}
+                          >
+                            {justAddedVariant === v.id ? (
+                              <span className="inline-flex items-center gap-1">
+                                <Check className="size-3.5" />
+                                Adăugat
+                              </span>
+                            ) : (
+                              "Adaugă în coș"
+                            )}
+                          </button>
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -251,21 +292,53 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
                   {product.variants.map((v) => (
                     <li
                       key={v.id}
-                      className="flex items-center justify-between gap-3 rounded-xl border border-[#3D3028]/10 bg-white/55 px-3 py-2.5"
+                      className="rounded-xl border border-[#3D3028]/10 bg-white/55 px-3 py-2.5"
                     >
-                      <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
-                        {v.label}
-                      </span>
-                      <span className="font-heading text-base font-semibold text-[#3D3028]">{formatRon(v.priceRon)}</span>
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="rounded-full bg-[#C4B98F]/35 px-3 py-1 text-xs font-semibold text-[#2A4A49] ring-1 ring-[#355E3B]/20">
+                          {v.label}
+                        </span>
+                        <span className="font-heading text-base font-semibold text-[#3D3028]">{formatRon(v.priceRon)}</span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap items-center justify-end gap-2">
+                        <div className="inline-flex items-center rounded-full border border-[#3D3028]/15 bg-white">
+                          <button
+                            type="button"
+                            className="inline-flex size-8 items-center justify-center text-[#3D3028]"
+                            onClick={() => setVariantQty(v.id, getVariantQty(v.id) - 1)}
+                            aria-label={`Scade cantitatea pentru ${product.name} ${v.label}`}
+                          >
+                            <Minus className="size-4" />
+                          </button>
+                          <span className="min-w-8 text-center text-sm font-semibold text-[#3D3028]">{getVariantQty(v.id)}</span>
+                          <button
+                            type="button"
+                            className="inline-flex size-8 items-center justify-center text-[#3D3028]"
+                            onClick={() => setVariantQty(v.id, getVariantQty(v.id) + 1)}
+                            aria-label={`Creste cantitatea pentru ${product.name} ${v.label}`}
+                          >
+                            <Plus className="size-4" />
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          className="inline-flex min-h-9 items-center justify-center rounded-full bg-[#355E3B] px-4 text-xs font-semibold text-white transition hover:bg-[#264A2F]"
+                          onClick={() => handleAddToCart(v.id)}
+                        >
+                          {justAddedVariant === v.id ? (
+                            <span className="inline-flex items-center gap-1">
+                              <Check className="size-3.5" />
+                              Adăugat
+                            </span>
+                          ) : (
+                            "Adaugă în coș"
+                          )}
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
               )}
-              <div className="mt-4">
-                <WhatsAppButton href={waPlumbHref} size="md" className="w-full shadow-none sm:w-auto">
-                  Comandă
-                </WhatsAppButton>
-              </div>
             </>
           ) : (
             <div className={`mt-4 space-y-2 ${open ? "block" : "hidden"} sm:block`}>
@@ -280,13 +353,41 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
                     </span>
                     <p className="font-heading text-base font-semibold text-[#3D3028] sm:mt-2">{formatRon(v.priceRon)}</p>
                   </div>
-                  <WhatsAppButton
-                    href={buildWhatsAppUrl(orderMessage(product.name, v.label))}
-                    size="md"
-                    className="w-full sm:w-auto shadow-none"
-                  >
-                    Comandă
-                  </WhatsAppButton>
+                  <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto">
+                    <div className="inline-flex items-center rounded-full border border-[#3D3028]/15 bg-white">
+                      <button
+                        type="button"
+                        className="inline-flex size-8 items-center justify-center text-[#3D3028]"
+                        onClick={() => setVariantQty(v.id, getVariantQty(v.id) - 1)}
+                        aria-label={`Scade cantitatea pentru ${product.name} ${v.label}`}
+                      >
+                        <Minus className="size-4" />
+                      </button>
+                      <span className="min-w-8 text-center text-sm font-semibold text-[#3D3028]">{getVariantQty(v.id)}</span>
+                      <button
+                        type="button"
+                        className="inline-flex size-8 items-center justify-center text-[#3D3028]"
+                        onClick={() => setVariantQty(v.id, getVariantQty(v.id) + 1)}
+                        aria-label={`Creste cantitatea pentru ${product.name} ${v.label}`}
+                      >
+                        <Plus className="size-4" />
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#355E3B] px-4 text-sm font-semibold text-white transition hover:bg-[#264A2F]"
+                      onClick={() => handleAddToCart(v.id)}
+                    >
+                      {justAddedVariant === v.id ? (
+                        <span className="inline-flex items-center gap-1">
+                          <Check className="size-3.5" />
+                          Adăugat
+                        </span>
+                      ) : (
+                        "Adaugă în coș"
+                      )}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

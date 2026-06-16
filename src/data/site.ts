@@ -6,6 +6,9 @@ export const BRAND_NAME = "Plumbi și Momitoare";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://plumbisimomitoare.ro";
 export const WHATSAPP_LYRABAITS_PROMO_PREFIX =
   "Client venit de la LyraBaits, beneficiaza de promotia 10+1.";
+export const LYRABAITS_UTM_SOURCE = "lyrabaits";
+export const LYRABAITS_UTM_MEDIUM = "referral";
+export const LYRABAITS_UTM_CAMPAIGN = "parteneri";
 
 export function buildWhatsAppUrl(message: string) {
   const params = new URLSearchParams();
@@ -34,4 +37,12 @@ export function addWhatsAppMessagePrefix(url: string, prefix: string) {
   } catch {
     return url;
   }
+}
+
+export function hasLyraBaitsReferralParams(params: URLSearchParams) {
+  return (
+    params.get("utm_source")?.toLowerCase() === LYRABAITS_UTM_SOURCE &&
+    params.get("utm_medium")?.toLowerCase() === LYRABAITS_UTM_MEDIUM &&
+    params.get("utm_campaign")?.toLowerCase() === LYRABAITS_UTM_CAMPAIGN
+  );
 }
