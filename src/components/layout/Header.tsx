@@ -8,8 +8,7 @@ import { Menu, ShoppingCart, X } from "lucide-react";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { useCart } from "@/components/cart/CartContext";
 import { Container } from "@/components/ui/Container";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { BRAND_NAME, buildWhatsAppUrl } from "@/data/site";
+import { BRAND_NAME } from "@/data/site";
 
 const nav = [
   { href: "/#acasa", label: "Acasă" },
@@ -19,9 +18,6 @@ const nav = [
   { href: "/#despre", label: "Despre noi" },
   { href: "/#contact", label: "Contact" },
 ];
-
-const defaultOrderMsg =
-  "Salut! Doresc să comand produsele voastre (plumbi / momitoare). Mă puteți ajuta cu disponibilitatea?";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -36,8 +32,6 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [open]);
-
-  const waHref = buildWhatsAppUrl(defaultOrderMsg);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#3D3028]/[0.06]">
@@ -73,13 +67,6 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <CartDrawer />
-          <WhatsAppButton
-            href={waHref}
-            size="lg"
-            className="inline-flex shrink-0 whitespace-nowrap shadow-none max-[429px]:min-h-11 max-[429px]:gap-0 max-[429px]:px-3.5 max-[429px]:[&_svg]:size-6"
-          >
-            <span className="max-[429px]:sr-only">Comandă pe WhatsApp</span>
-          </WhatsAppButton>
           <button
             type="button"
             className="inline-flex size-14 items-center justify-center rounded-full border border-[#3D3028]/10 bg-white/70 text-[#3D3028] shadow-sm backdrop-blur lg:hidden"
@@ -128,9 +115,6 @@ export function Header() {
                 <ShoppingCart className="size-5" />
                 Coș {isHydrated && totalItems > 0 ? `(${totalItems})` : ""}
               </Link>
-              <WhatsAppButton href={waHref} size="lg" className="mt-2 w-full sm:hidden">
-                Comandă pe WhatsApp
-              </WhatsAppButton>
             </Container>
           </motion.div>
         ) : null}
