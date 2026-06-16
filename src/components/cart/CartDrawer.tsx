@@ -11,6 +11,7 @@ export function CartDrawer() {
   const pathname = usePathname();
   const { items, totalItems, totalPriceRon, isHydrated } = useCart();
   const [open, setOpen] = useState(false);
+  const [isBumping, setIsBumping] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const shouldRenderDrawer = pathname === "/";
 
@@ -18,9 +19,21 @@ export function CartDrawer() {
     if (!shouldRenderDrawer) {
       return;
     }
-    const openDrawer = () => setOpen(true);
-    window.addEventListener("cart:item-added", openDrawer);
-    return () => window.removeEventListener("cart:item-added", openDrawer);
+    let timeoutId: number | null = null;
+    const animateButton = () => {
+      setIsBumping(true);
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      timeoutId = window.setTimeout(() => setIsBumping(false), 260);
+    };
+    window.addEventListener("cart:item-added", animateButton);
+    return () => {
+      window.removeEventListener("cart:item-added", animateButton);
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
   }, [shouldRenderDrawer]);
 
   useEffect(() => {
@@ -60,7 +73,9 @@ export function CartDrawer() {
     <div className="relative" ref={panelRef}>
       <button
         type="button"
-        className="relative inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[#3D3028]/15 bg-white/75 px-4 text-sm font-semibold text-[#3D3028] transition hover:border-[#355E3B]/35"
+        className={`relative inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[#3D3028]/15 bg-white/75 px-4 text-sm font-semibold text-[#3D3028] transition duration-200 hover:border-[#355E3B]/35 ${
+          isBumping ? "scale-[1.06] border-[#355E3B]/45 shadow-[0_14px_34px_-20px_rgba(53,94,59,0.75)]" : ""
+        }`}
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="mini-cart-drawer"
@@ -77,7 +92,7 @@ export function CartDrawer() {
       {open ? (
         <div
           id="mini-cart-drawer"
-          className="absolute right-0 top-[calc(100%+0.6rem)] z-[80] w-[min(92vw,24rem)] rounded-2xl border border-[#3D3028]/10 bg-white p-4 shadow-[0_24px_64px_-36px_rgba(61,48,40,0.55)]"
+          className="absolute left-1/2 top-[calc(100%+0.6rem)] z-[80] w-[min(92vw,24rem)] -translate-x-1/2 rounded-2xl border border-[#3D3028]/10 bg-white p-4 shadow-[0_24px_64px_-36px_rgba(61,48,40,0.55)] sm:left-auto sm:right-0 sm:translate-x-0"
           role="dialog"
           aria-label="Coș rapid"
         >
