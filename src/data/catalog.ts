@@ -48,6 +48,7 @@ export const PLUMBI_ORDER = [
   "plumb-pasta-paste-bomb",
   "plumb-bag",
   "plumb-sondare",
+  "plumb-inline-clonc",
 ] as const;
 
 /** Ordinea afișării produselor din categoria Momitoare în catalog. */
@@ -191,6 +192,19 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     images: ["/new_photos/momitoare method pellet.png"],
     category: "momitoare",
     variants: [{ id: "mmp-35", label: "35 g", priceRon: 5 }],
+  },
+  {
+    slug: "plumb-inline-clonc",
+    name: "Plumbi inline pentru clonc",
+    shortDescription:
+      "Plumbi inline pentru clonc, realizați pentru pescarii care caută stabilitate, lansări precise și o prezentare eficientă a monturii.",
+    images: ["/clonc.png", "/2xclonc.png"],
+    category: "plumbi",
+    variants: [
+      { id: "pic-150", label: "150 g", priceRon: 9 },
+      { id: "pic-170", label: "170 g", priceRon: 10 },
+      { id: "pic-200", label: "200 g", priceRon: 12 },
+    ],
   },
   {
     slug: "plumb-inline",
@@ -456,7 +470,12 @@ function getInferredProducts(): ProductSeed[] {
 export function getCatalog(): CatalogProduct[] {
   return [...PRODUCT_SEEDS]
     .filter((p) => p.images.length > 0)
-    .filter((p) => p.images.every((img) => img.startsWith("/new_photos/")))
+    .filter(
+      (p) =>
+        p.images.every(
+          (img) => img.startsWith("/new_photos/") || DISCOVERED_SET.has(img.replace(/^\//, "")),
+        ),
+    )
     .map((seed) => ({
       id: seed.slug,
       slug: seed.slug,

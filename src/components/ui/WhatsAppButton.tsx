@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { HTMLMotionProps } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { addWhatsAppMessagePrefix, WHATSAPP_LYRABAITS_PROMO_PREFIX } from "@/data/site";
 
 type Props = Omit<HTMLMotionProps<"a">, "href" | "children"> & {
   href: string;
@@ -13,11 +15,30 @@ type Props = Omit<HTMLMotionProps<"a">, "href" | "children"> & {
 
 export function WhatsAppButton({ href, className = "", size = "md", children, ...rest }: Props) {
   const reduce = useReducedMotion();
+  const [hasLyraBaitsPromo, setHasLyraBaitsPromo] = useState(false);
   const sizeCls = size === "lg" ? "min-h-[52px] px-7 text-base gap-2.5" : "min-h-[48px] px-5 text-sm gap-2";
+  const finalHref = useMemo(
+    () => (hasLyraBaitsPromo ? addWhatsAppMessagePrefix(href, WHATSAPP_LYRABAITS_PROMO_PREFIX) : href),
+    [hasLyraBaitsPromo, href],
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const isLyraBaitsReferral =
+      params.get("utm_source")?.toLowerCase() === "lyrabaits" &&
+      params.get("utm_medium")?.toLowerCase() === "referral" &&
+      params.get("utm_campaign")?.toLowerCase() === "parteneri";
+
+    setHasLyraBaitsPromo(isLyraBaitsReferral);
+  }, []);
 
   return (
     <motion.a
-      href={href}
+      href={finalHref}
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-flex items-center justify-center rounded-full font-semibold text-white shadow-[0_12px_40px_-12px_rgba(53,94,59,0.56)] bg-[#355E3B] ring-1 ring-white/20 transition-colors hover:bg-[#264A2F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D3028] ${sizeCls} ${className}`}
