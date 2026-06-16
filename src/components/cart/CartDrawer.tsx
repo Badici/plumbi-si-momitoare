@@ -92,7 +92,7 @@ export function CartDrawer() {
       {open ? (
         <div
           id="mini-cart-drawer"
-          className="absolute left-1/2 top-[calc(100%+0.6rem)] z-[80] w-[min(92vw,24rem)] -translate-x-1/2 rounded-2xl border border-[#3D3028]/10 bg-white p-4 shadow-[0_24px_64px_-36px_rgba(61,48,40,0.55)] sm:left-auto sm:right-0 sm:translate-x-0"
+          className="fixed left-1/2 top-[6.1rem] z-[80] w-[calc(100vw-1.5rem)] max-w-[24rem] -translate-x-1/2 rounded-2xl border border-[#3D3028]/10 bg-white p-4 shadow-[0_24px_64px_-36px_rgba(61,48,40,0.55)] sm:absolute sm:left-auto sm:right-0 sm:top-[calc(100%+0.6rem)] sm:w-[min(92vw,24rem)] sm:translate-x-0"
           role="dialog"
           aria-label="Coș rapid"
         >
