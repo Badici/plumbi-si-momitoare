@@ -59,6 +59,7 @@ export const MOMITOARE_ORDER = [
   "momitoare-cilindrice",
   "momitoare-longcast",
   "momitoare-cu-placa",
+  "momitoare-cu-placa-capacitate-mare",
   "momitoare-method-pellet",
 ] as const;
 
@@ -182,6 +183,21 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     variants: [
       { id: "mp-100", label: "100 g", priceRon: 7 },
       { id: "mp-120", label: "120 g", priceRon: 7.5 },
+    ],
+  },
+  {
+    slug: "momitoare-cu-placa-capacitate-mare",
+    name: "Momitoare cu placă cu capacitate mare",
+    shortDescription:
+      "Construite pe un profil apropiat de method, cu placă pentru stabilitate și poziționare bună în curenți sau pe fund variat, în varianta cu capacitate mare.",
+    images: ["/new_photos/momitoare-placa-mari.png"],
+    category: "momitoare",
+    variants: [
+      { id: "mpm-80", label: "80 g", priceRon: 6 },
+      { id: "mpm-100", label: "100 g", priceRon: 6.5 },
+      { id: "mpm-120", label: "120 g", priceRon: 7 },
+      { id: "mpm-140", label: "140 g", priceRon: 7.5 },
+      { id: "mpm-160", label: "160 g", priceRon: 8 },
     ],
   },
   {
