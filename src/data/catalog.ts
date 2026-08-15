@@ -73,9 +73,9 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     category: "cosulete-feeder",
     badge: "Lake",
     variants: [
-      { id: "cl-30", label: "30 g", priceRon: 18 },
-      { id: "cl-40", label: "40 g", priceRon: 20 },
-      { id: "cl-50", label: "50 g", priceRon: 22 },
+      { id: "cl-30", label: "30 g", priceRon: 4 },
+      { id: "cl-40", label: "40 g", priceRon: 4.5 },
+      { id: "cl-50", label: "50 g", priceRon: 5 },
     ],
   },
   {
@@ -88,9 +88,9 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     category: "cosulete-feeder",
     badge: "Lake",
     variants: [
-      { id: "cl-30", label: "30 g", priceRon: 18 },
-      { id: "cl-40", label: "40 g", priceRon: 20 },
-      { id: "cl-50", label: "50 g", priceRon: 22 },
+      { id: "cl-30", label: "30 g", priceRon: 4 },
+      { id: "cl-40", label: "40 g", priceRon: 4.5 },
+      { id: "cl-50", label: "50 g", priceRon: 5 },
     ],
   },
   {
@@ -190,7 +190,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     name: "Momitoare cu placă cu capacitate mare",
     shortDescription:
       "Construite pe un profil apropiat de method, cu placă pentru stabilitate și poziționare bună în curenți sau pe fund variat, în varianta cu capacitate mare.",
-    images: ["/new_photos/momitoare-placa-mari.png"],
+    images: ["/momitoare-placa-mari-1.png", "/momitoare-placa-mari-2.png", "/momitoare-placa-mari-3.png"],
     category: "momitoare",
     variants: [
       { id: "mpm-80", label: "80 g", priceRon: 6 },
