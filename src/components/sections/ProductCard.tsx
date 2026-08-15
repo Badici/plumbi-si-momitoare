@@ -123,6 +123,7 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
   const reduce = useReducedMotion();
   const { addItem } = useCart();
   const [open, setOpen] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
   const [qtyByVariant, setQtyByVariant] = useState<Record<string, number>>({});
@@ -133,6 +134,7 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
 
   const minPrice = useMemo(() => Math.min(...product.variants.map((v) => v.priceRon)), [product.variants]);
   const currentImage = product.images[imageIndex] ?? product.images[0];
+  const hasLongDescription = product.shortDescription.length > 120;
   const getVariantQty = (variantId: string) => qtyByVariant[variantId] ?? 1;
   const setVariantQty = (variantId: string, qty: number) => {
     setQtyByVariant((prev) => ({ ...prev, [variantId]: Math.max(1, qty) }));
@@ -204,7 +206,19 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <h3 className="font-heading text-lg font-semibold leading-snug tracking-tight text-[#3D3028]">{product.name}</h3>
-              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#3D3028]/70">{product.shortDescription}</p>
+              <p className={`mt-2 text-sm leading-relaxed text-[#3D3028]/70 ${showFullDescription ? "" : "line-clamp-3"}`}>
+                {product.shortDescription}
+              </p>
+              {hasLongDescription ? (
+                <button
+                  type="button"
+                  className="mt-1 text-xs font-semibold text-[#355E3B] transition hover:text-[#264A2F]"
+                  onClick={() => setShowFullDescription((value) => !value)}
+                  aria-expanded={showFullDescription}
+                >
+                  {showFullDescription ? "Citește mai puțin" : "Citește mai mult"}
+                </button>
+              ) : null}
             </div>
           </div>
 
