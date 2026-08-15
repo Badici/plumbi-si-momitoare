@@ -174,7 +174,7 @@ const PRODUCT_SEEDS: ProductSeed[] = [
   },
   {
     slug: "momitoare-cu-placa",
-    name: "Momitoare cu placă",
+    name: "Momitoare cu placă cu capacitate mică",
     shortDescription:
       "Construite pe un profil apropiat de method, cu placă pentru stabilitate și poziționare bună în curenți sau pe fund variat.",
     images: ["/new_photos/momitoare cu placa.png"],
