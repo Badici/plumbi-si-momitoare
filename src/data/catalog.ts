@@ -102,10 +102,10 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     category: "cosulete-feeder",
     badge: "Feeder",
     variants: [
-      { id: "cf-30", label: "90 g", priceRon: 18 },
-      { id: "cf-40", label: "110 g", priceRon: 20 },
-      { id: "cf-50", label: "130 g", priceRon: 22 },
-      { id: "cf-60", label: "150 g", priceRon: 24 },
+      { id: "cf-30", label: "90 g", priceRon: 9 },
+      { id: "cf-40", label: "110 g", priceRon: 10 },
+      { id: "cf-50", label: "130 g", priceRon: 11 },
+      { id: "cf-60", label: "150 g", priceRon: 12 },
     ],
   },
   {
