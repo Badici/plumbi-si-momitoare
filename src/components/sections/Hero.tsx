@@ -61,7 +61,7 @@ export function Hero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
-            Plumbi și momitoare premium pentru pescari care vor rezultate.
+            Plumbi și momitoare premium pentru pescarii care vor rezultate.
           </motion.h1>
 
           <motion.p
