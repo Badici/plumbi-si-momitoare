@@ -89,12 +89,23 @@ export async function POST(request: NextRequest) {
       body: payload,
     });
 
-    const data = (await response.json().catch(() => ({}))) as { success?: string; message?: string };
+    const raw = await response.text();
+    let data: { success?: string; message?: string } = {};
+    try {
+      data = JSON.parse(raw) as { success?: string; message?: string };
+    } catch {
+      data = {};
+    }
     if (!response.ok || data.success !== "true") {
+      const fallbackDetail = raw?.trim().slice(0, 220);
       return NextResponse.json(
         {
           ok: false,
-          message: data.message ?? "FormSubmit a respins trimiterea. Confirmă activarea emailului principal.",
+          message:
+            data.message ??
+            (fallbackDetail
+              ? `FormSubmit a respins trimiterea: ${fallbackDetail}`
+              : "FormSubmit a respins trimiterea. Confirmă activarea emailului principal."),
         },
         { status: 502 },
       );

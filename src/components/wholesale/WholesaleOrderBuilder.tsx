@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Trash2 } from "lucide-react";
+import { ChevronDown, Search, Trash2 } from "lucide-react";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { useMemo, useState } from "react";
 import { BRAND_NAME, SITE_URL, WHATSAPP_DISPLAY } from "@/data/site";
@@ -54,6 +54,10 @@ function sanitizePdfText(value: string) {
     .replace(/Ș/g, "S")
     .replace(/ț/g, "t")
     .replace(/Ț/g, "T");
+}
+
+function normalizeSearchText(value: string) {
+  return sanitizePdfText(value).toLowerCase().trim();
 }
 
 function buildMailText(orderNumber: string, lines: OrderLine[], client: ClientFields, totalRon: number) {
@@ -264,6 +268,7 @@ async function buildPdfBytes(orderNumber: string, lines: OrderLine[], client: Cl
 export function WholesaleOrderBuilder({ products }: { products: ProductLite[] }) {
   const [query, setQuery] = useState("");
   const [lines, setLines] = useState<OrderLine[]>([]);
+  const [expandedProducts, setExpandedProducts] = useState<Record<string, boolean>>({});
   const [clientFields, setClientFields] = useState<ClientFields>({
     clientName: "",
     clientSurname: "",
@@ -274,11 +279,15 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
   const [sendState, setSendState] = useState<{ ok: boolean; message: string } | null>(null);
 
   const filteredProducts = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = normalizeSearchText(query);
     if (!q) {
       return products;
     }
-    return products.filter((product) => product.name.toLowerCase().includes(q));
+    return products.filter((product) => {
+      const nameMatch = normalizeSearchText(product.name).includes(q);
+      const variantMatch = product.variants.some((variant) => normalizeSearchText(variant.label).includes(q));
+      return nameMatch || variantMatch;
+    });
   }, [products, query]);
 
   const totalRon = useMemo(
@@ -323,6 +332,13 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
   const clearLines = () => {
     setLines([]);
     setSendState(null);
+  };
+
+  const toggleProductExpanded = (productId: string) => {
+    setExpandedProducts((prev) => ({
+      ...prev,
+      [productId]: !prev[productId],
+    }));
   };
 
   const finishOrder = async () => {
@@ -406,10 +422,10 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
   return (
     <main className="px-4 pb-10 pt-6 sm:px-6 sm:pt-8">
       <a
-        href="#catalog-produse"
-        className="fixed bottom-4 right-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#355E3B] px-4 text-sm font-semibold text-white shadow-[0_18px_40px_-22px_rgba(53,94,59,0.75)] md:hidden"
+        href="#calcul-comanda"
+        className="fixed bottom-4 right-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#355E3B] px-4 text-sm font-semibold text-white shadow-[0_18px_40px_-22px_rgba(53,94,59,0.75)]"
       >
-        Mergi la foaia de calcul
+        Foaia de comanda
       </a>
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <section className="rounded-2xl border border-[#3D3028]/10 bg-white/80 p-4 sm:p-5">
@@ -418,7 +434,7 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
             Caută produse, adaugă gramajele dorite, setează prețul manual în RON și finalizează factura pe email.
           </p>
           <a
-            href="#catalog-produse"
+            href="#calcul-comanda"
             className="mt-4 inline-flex min-h-10 items-center justify-center rounded-full border border-[#355E3B]/25 bg-[#F3FAF9] px-4 text-sm font-semibold text-[#355E3B] transition hover:bg-[#E9F4F0]"
           >
             Mergi la foaia de calcul
@@ -440,27 +456,45 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
 
         <section id="catalog-produse" className="scroll-mt-28 rounded-2xl border border-[#3D3028]/10 bg-white/80 p-4 sm:p-5">
           <h2 className="font-heading text-lg font-semibold text-[#3D3028] sm:text-xl">Catalog produse</h2>
+          <p className="mt-1 text-xs text-[#3D3028]/65">
+            Afișate: {filteredProducts.length} din {products.length} produse totale.
+          </p>
           <div className="mt-4 space-y-3">
             {filteredProducts.map((product) => (
               <article key={product.id} className="rounded-xl border border-[#3D3028]/10 bg-[#F9F7F2] p-3 sm:p-4">
-                <p className="font-semibold text-[#3D3028]">{product.name}</p>
-                <div className="mt-2 grid gap-2">
-                  {product.variants.map((variant) => (
-                    <div key={variant.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-white/90 px-3 py-2">
-                      <div>
-                        <p className="text-sm font-medium text-[#3D3028]">{variant.label}</p>
-                        <p className="text-xs text-[#3D3028]/65">Preț catalog: {formatRon(variant.priceRon)}</p>
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between gap-3 text-left"
+                  onClick={() => toggleProductExpanded(product.id)}
+                  aria-expanded={Boolean(expandedProducts[product.id])}
+                >
+                  <div>
+                    <p className="font-semibold text-[#3D3028]">{product.name}</p>
+                    <p className="text-xs text-[#3D3028]/65">{product.variants.length} gramaje disponibile</p>
+                  </div>
+                  <ChevronDown
+                    className={`size-4 shrink-0 text-[#3D3028]/70 transition ${expandedProducts[product.id] ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {expandedProducts[product.id] ? (
+                  <div className="mt-2 grid gap-2">
+                    {product.variants.map((variant) => (
+                      <div key={variant.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-white/90 px-3 py-2">
+                        <div>
+                          <p className="text-sm font-medium text-[#3D3028]">{variant.label}</p>
+                          <p className="text-xs text-[#3D3028]/65">Preț catalog: {formatRon(variant.priceRon)}</p>
+                        </div>
+                        <button
+                          type="button"
+                          className="inline-flex min-h-9 items-center justify-center rounded-full bg-[#355E3B] px-4 text-xs font-semibold text-white transition hover:bg-[#264A2F]"
+                          onClick={() => addLine(product, variant)}
+                        >
+                          Adaugă în calcul
+                        </button>
                       </div>
-                      <button
-                        type="button"
-                        className="inline-flex min-h-9 items-center justify-center rounded-full bg-[#355E3B] px-4 text-xs font-semibold text-white transition hover:bg-[#264A2F]"
-                        onClick={() => addLine(product, variant)}
-                      >
-                        Adaugă în calcul
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : null}
               </article>
             ))}
             {filteredProducts.length === 0 ? (
@@ -471,7 +505,7 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
           </div>
         </section>
 
-        <section className="rounded-2xl border border-[#3D3028]/10 bg-white/80 p-4 sm:p-5">
+        <section id="calcul-comanda" className="scroll-mt-28 rounded-2xl border border-[#3D3028]/10 bg-white/80 p-4 sm:p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="font-heading text-lg font-semibold text-[#3D3028] sm:text-xl">Calcul comandă</h2>
             <button
