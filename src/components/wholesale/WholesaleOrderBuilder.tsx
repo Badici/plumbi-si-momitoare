@@ -4,7 +4,7 @@ import { ChevronDown, Search, Trash2 } from "lucide-react";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { useMemo, useState } from "react";
 import { BRAND_NAME, SITE_URL, WHATSAPP_DISPLAY } from "@/data/site";
-import { WHOLESALE_EMAIL_RECIPIENTS } from "@/data/wholesale";
+import { WHOLESALE_EMAIL_RECIPIENTS, WHOLESALE_FORMSUBMIT_ENDPOINT } from "@/data/wholesale";
 import { formatRon } from "@/lib/format";
 
 type ProductVariantLite = {
@@ -100,6 +100,27 @@ function toBase64(bytes: Uint8Array) {
     binary += String.fromCharCode(...chunk);
   }
   return btoa(binary);
+}
+
+async function submitFormSubmitDirect(formData: FormData) {
+  const response = await fetch(WHOLESALE_FORMSUBMIT_ENDPOINT, {
+    method: "POST",
+    headers: { Accept: "application/json" },
+    body: formData,
+  });
+  const raw = await response.text().catch(() => "");
+  let data: { success?: string; message?: string } = {};
+  try {
+    data = JSON.parse(raw) as { success?: string; message?: string };
+  } catch {
+    data = {};
+  }
+
+  const okByBody = data.success === "true" || /thanks|thank you|sent/i.test(raw);
+  if (!response.ok && !okByBody) {
+    const detail = raw.trim().slice(0, 220);
+    throw new Error(data.message ?? detail ?? `FormSubmit HTTP ${response.status}`);
+  }
 }
 
 function downloadPdfBytes(fileName: string, bytes: Uint8Array) {
@@ -361,6 +382,28 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
       const pdfBytes = await buildPdfBytes(orderNumber, lines, clientFields, totalRon);
       const fileName = `${orderNumber}.pdf`;
       const textBody = buildMailText(orderNumber, lines, clientFields, totalRon);
+      const pdfBlob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: "application/pdf" });
+      const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+      const formData = new FormData();
+      formData.append("_subject", `Comanda en-gros ${orderNumber}`);
+      formData.append("_cc", WHOLESALE_EMAIL_RECIPIENTS[1]);
+      formData.append("_captcha", "false");
+      formData.append("message", textBody);
+      formData.append("order_number", orderNumber);
+      formData.append("total_ron", totalRon.toFixed(2));
+      formData.append("client_name", clientFields.clientName.trim() || "-");
+      formData.append("client_surname", clientFields.clientSurname.trim() || "-");
+      formData.append("company_name", clientFields.companyName.trim() || "-");
+      formData.append("client_address", clientFields.address.trim() || "-");
+      formData.append("attachment", pdfFile);
+      lines.forEach((line, index) => {
+        formData.append(
+          `line_${index + 1}`,
+          `${line.productName} | ${line.variantLabel} | cant ${line.quantity} | pret ${line.unitPriceRon} RON`,
+        );
+      });
+
       const response = await fetch("/api/wholesale/send-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -382,12 +425,26 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
 
       const result = (await response.json().catch(() => ({}))) as { ok?: boolean; message?: string };
       if (!response.ok || !result.ok) {
-        setSendState({
-          ok: false,
-          message: result.message ?? "Nu am putut trimite comanda prin FormSubmit.",
-        });
-        setIsSending(false);
-        return;
+        // Fallback: try direct browser -> FormSubmit when proxy fails.
+        try {
+          await submitFormSubmitDirect(formData);
+          setSendState({
+            ok: true,
+            message: "Comanda a fost trimisă prin fallback direct la FormSubmit.",
+          });
+          return;
+        } catch (fallbackError) {
+          const fallbackMessage = fallbackError instanceof Error ? fallbackError.message : null;
+          setSendState({
+            ok: false,
+            message:
+              fallbackMessage ??
+              result.message ??
+              "Nu am putut trimite comanda prin FormSubmit (proxy + fallback direct).",
+          });
+          setIsSending(false);
+          return;
+        }
       }
 
       setSendState({ ok: true, message: "Comanda a fost trimisă pe email prin FormSubmit (cu PDF atașat)." });

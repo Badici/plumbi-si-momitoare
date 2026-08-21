@@ -96,7 +96,8 @@ export async function POST(request: NextRequest) {
     } catch {
       data = {};
     }
-    if (!response.ok || data.success !== "true") {
+    const successByBody = data.success === "true" || /thanks|thank you|sent/i.test(raw);
+    if (!response.ok && !successByBody) {
       const fallbackDetail = raw?.trim().slice(0, 220);
       return NextResponse.json(
         {
