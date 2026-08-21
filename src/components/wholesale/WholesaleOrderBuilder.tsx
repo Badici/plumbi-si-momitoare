@@ -4,7 +4,7 @@ import { ChevronDown, Search, Trash2 } from "lucide-react";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { useMemo, useState } from "react";
 import { BRAND_NAME, SITE_URL, WHATSAPP_DISPLAY } from "@/data/site";
-import { WHOLESALE_EMAIL_RECIPIENTS } from "@/data/wholesale";
+import { WHOLESALE_EMAIL_RECIPIENTS, WHOLESALE_FORMSUBMIT_ENDPOINT } from "@/data/wholesale";
 import { formatRon } from "@/lib/format";
 
 type ProductVariantLite = {
@@ -90,16 +90,6 @@ function getSiteBaseUrl() {
     return window.location.origin;
   }
   return SITE_URL;
-}
-
-function toBase64(bytes: Uint8Array) {
-  let binary = "";
-  const chunkSize = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    const chunk = bytes.subarray(i, i + chunkSize);
-    binary += String.fromCharCode(...chunk);
-  }
-  return btoa(binary);
 }
 
 function downloadPdfBytes(fileName: string, bytes: Uint8Array) {
@@ -361,30 +351,40 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
       const pdfBytes = await buildPdfBytes(orderNumber, lines, clientFields, totalRon);
       const fileName = `${orderNumber}.pdf`;
       const textBody = buildMailText(orderNumber, lines, clientFields, totalRon);
-      const response = await fetch("/api/wholesale/send-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderNumber,
-          client: clientFields,
-          lines: lines.map((line) => ({
-            productName: line.productName,
-            variantLabel: line.variantLabel,
-            quantity: line.quantity,
-            unitPriceRon: line.unitPriceRon,
-          })),
-          totalRon,
-          message: textBody,
-          pdfFileName: fileName,
-          pdfBase64: toBase64(pdfBytes),
-        }),
+      const pdfBlob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: "application/pdf" });
+      const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+      const formData = new FormData();
+      formData.append("_subject", `Comanda en-gros ${orderNumber}`);
+      formData.append("_cc", WHOLESALE_EMAIL_RECIPIENTS[1]);
+      formData.append("_captcha", "false");
+      formData.append("message", textBody);
+      formData.append("order_number", orderNumber);
+      formData.append("total_ron", totalRon.toFixed(2));
+      formData.append("client_name", clientFields.clientName.trim() || "-");
+      formData.append("client_surname", clientFields.clientSurname.trim() || "-");
+      formData.append("company_name", clientFields.companyName.trim() || "-");
+      formData.append("client_address", clientFields.address.trim() || "-");
+      formData.append("attachment", pdfFile);
+      lines.forEach((line, index) => {
+        formData.append(
+          `line_${index + 1}`,
+          `${line.productName} | ${line.variantLabel} | cant ${line.quantity} | pret ${line.unitPriceRon} RON`,
+        );
       });
 
-      const result = (await response.json().catch(() => ({}))) as { ok?: boolean; message?: string };
-      if (!response.ok || !result.ok) {
+      const response = await fetch(WHOLESALE_FORMSUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+
+      const result = (await response.json().catch(() => ({}))) as { success?: string; message?: string };
+      if (!response.ok || result.success !== "true") {
+        const fallbackMessage = result.message ?? "FormSubmit nu a confirmat trimiterea.";
         setSendState({
           ok: false,
-          message: result.message ?? "Nu am putut trimite comanda prin FormSubmit.",
+          message: fallbackMessage,
         });
         setIsSending(false);
         return;
