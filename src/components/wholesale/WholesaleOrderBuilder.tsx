@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, Search, Trash2 } from "lucide-react";
+import confetti from "canvas-confetti";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { useMemo, useState } from "react";
 import { BRAND_NAME, SITE_URL, WHATSAPP_DISPLAY } from "@/data/site";
@@ -38,6 +39,27 @@ type ClientFields = {
 
 function buildOrderNumber() {
   return `EG-${Date.now()}`;
+}
+
+function sanitizeFilePart(value: string) {
+  const ascii = sanitizePdfText(value);
+  return ascii
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-_]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 40);
+}
+
+function buildPdfFileName(orderNumber: string, client: ClientFields) {
+  const company = sanitizeFilePart(client.companyName);
+  const fullName = sanitizeFilePart(`${client.clientName} ${client.clientSurname}`);
+  const prefix = company || fullName;
+  if (!prefix) {
+    return `${orderNumber}.pdf`;
+  }
+  return `${prefix}-${orderNumber}.pdf`;
 }
 
 function sanitizePdfText(value: string) {
@@ -267,6 +289,7 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
   });
   const [isSending, setIsSending] = useState(false);
   const [sendState, setSendState] = useState<{ ok: boolean; message: string } | null>(null);
+  const [showBirthdayMessage, setShowBirthdayMessage] = useState(false);
 
   const filteredProducts = useMemo(() => {
     const q = normalizeSearchText(query);
@@ -349,7 +372,7 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
     try {
       const orderNumber = buildOrderNumber();
       const pdfBytes = await buildPdfBytes(orderNumber, lines, clientFields, totalRon);
-      const fileName = `${orderNumber}.pdf`;
+      const fileName = buildPdfFileName(orderNumber, clientFields);
       const textBody = buildMailText(orderNumber, lines, clientFields, totalRon);
       const pdfBlob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: "application/pdf" });
       const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
@@ -412,21 +435,75 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
     try {
       const orderNumber = buildOrderNumber();
       const bytes = await buildPdfBytes(orderNumber, lines, clientFields, totalRon);
-      downloadPdfBytes(`${orderNumber}.pdf`, bytes);
+      downloadPdfBytes(buildPdfFileName(orderNumber, clientFields), bytes);
       setSendState({ ok: true, message: "PDF descărcat cu succes." });
     } catch {
       setSendState({ ok: false, message: "Nu am putut genera PDF-ul. Verifică datele și încearcă din nou." });
     }
   };
 
+  const triggerBirthdayEasterEgg = () => {
+    confetti({
+      particleCount: 90,
+      spread: 72,
+      startVelocity: 42,
+      origin: { y: 0.7 },
+    });
+    confetti({
+      particleCount: 70,
+      angle: 60,
+      spread: 68,
+      origin: { x: 0, y: 0.75 },
+    });
+    confetti({
+      particleCount: 70,
+      angle: 120,
+      spread: 68,
+      origin: { x: 1, y: 0.75 },
+    });
+
+    setShowBirthdayMessage(true);
+    window.setTimeout(() => setShowBirthdayMessage(false), 2200);
+  };
+
   return (
     <main className="px-4 pb-10 pt-6 sm:px-6 sm:pt-8">
+      <button
+        type="button"
+        onClick={triggerBirthdayEasterEgg}
+        className="fixed right-4 top-4 z-40 inline-flex size-11 items-center justify-center rounded-full bg-[#EC4899] text-white shadow-[0_18px_40px_-22px_rgba(236,72,153,0.6)] transition hover:bg-[#DB2777]"
+        aria-label="Easter egg aniversar"
+      >
+        <svg viewBox="0 0 24 24" className="size-4.5" fill="none" aria-hidden>
+          <path
+            d="M12 5.25c-.72 0-1.3-.58-1.3-1.3 0-.67.45-1.1 1.3-1.95.85.85 1.3 1.28 1.3 1.95 0 .72-.58 1.3-1.3 1.3Z"
+            fill="currentColor"
+          />
+          <path d="M12 6.2v2.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          <path
+            d="M4 11.2a2.2 2.2 0 1 1 4.4 0v1.25h7.2V11.2a2.2 2.2 0 1 1 4.4 0v2.85H4V11.2Z"
+            fill="currentColor"
+            opacity=".9"
+          />
+          <path
+            d="M3.5 15.2h17a.5.5 0 0 1 .5.5V17a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-1.3a.5.5 0 0 1 .5-.5Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
       <a
         href="#calcul-comanda"
         className="fixed bottom-4 right-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#355E3B] px-4 text-sm font-semibold text-white shadow-[0_18px_40px_-22px_rgba(53,94,59,0.75)]"
       >
         Foaia de comanda
       </a>
+      {showBirthdayMessage ? (
+        <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div className="rounded-full bg-white/95 px-7 py-3 text-center text-xl font-bold text-[#DB2777] shadow-[0_24px_70px_-34px_rgba(61,48,40,0.75)]">
+            La multi ani viata mea!
+          </div>
+        </div>
+      ) : null}
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <section className="rounded-2xl border border-[#3D3028]/10 bg-white/80 p-4 sm:p-5">
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-[#3D3028] sm:text-3xl">Comenzi en-gros</h1>
