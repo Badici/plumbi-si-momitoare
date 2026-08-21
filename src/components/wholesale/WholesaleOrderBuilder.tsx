@@ -2,6 +2,7 @@
 
 import { ChevronDown, Search, Trash2 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { AnimatePresence, motion } from "framer-motion";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { useMemo, useState } from "react";
 import { BRAND_NAME, SITE_URL, WHATSAPP_DISPLAY } from "@/data/site";
@@ -291,6 +292,8 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
   const [isSending, setIsSending] = useState(false);
   const [sendState, setSendState] = useState<{ ok: boolean; message: string } | null>(null);
   const [showBirthdayMessage, setShowBirthdayMessage] = useState(false);
+  const [activeAddButtonKey, setActiveAddButtonKey] = useState<string | null>(null);
+  const [addToast, setAddToast] = useState<string | null>(null);
 
   const filteredProducts = useMemo(() => {
     const q = normalizeSearchText(query);
@@ -323,6 +326,17 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
         unitPriceRon: variant.priceRon,
       },
     ]);
+    const buttonKey = `${product.id}::${variant.id}`;
+    setActiveAddButtonKey(buttonKey);
+    window.setTimeout(() => {
+      setActiveAddButtonKey((current) => (current === buttonKey ? null : current));
+    }, 260);
+
+    const toastText = `${product.name} (${variant.label}) adăugat în foaia de calcul`;
+    setAddToast(toastText);
+    window.setTimeout(() => {
+      setAddToast((current) => (current === toastText ? null : current));
+    }, 1800);
   };
 
   const updateLine = (lineId: string, patch: Partial<Pick<OrderLine, "quantity" | "unitPriceRon">>) => {
@@ -505,6 +519,19 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
           </div>
         </div>
       ) : null}
+      <AnimatePresence>
+        {addToast ? (
+          <motion.div
+            className="pointer-events-none fixed bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full border border-[#355E3B]/20 bg-white/95 px-4 py-2 text-xs font-semibold text-[#355E3B] shadow-[0_18px_42px_-26px_rgba(61,48,40,0.6)]"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 18 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          >
+            {addToast}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <section className="rounded-2xl border border-[#3D3028]/10 bg-white/80 p-4 sm:p-5">
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-[#3D3028] sm:text-3xl">Comenzi en-gros</h1>
@@ -564,7 +591,9 @@ export function WholesaleOrderBuilder({ products }: { products: ProductLite[] })
                         </div>
                         <button
                           type="button"
-                          className="inline-flex min-h-9 items-center justify-center rounded-full bg-[#355E3B] px-4 text-xs font-semibold text-white transition hover:bg-[#264A2F]"
+                          className={`inline-flex min-h-9 items-center justify-center rounded-full bg-[#355E3B] px-4 text-xs font-semibold text-white transition duration-200 hover:bg-[#264A2F] ${
+                            activeAddButtonKey === `${product.id}::${variant.id}` ? "scale-105" : ""
+                          }`}
                           onClick={() => addLine(product, variant)}
                         >
                           Adaugă în calcul
