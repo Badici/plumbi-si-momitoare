@@ -278,6 +278,7 @@ async function buildPdfBytes(orderNumber: string, lines: OrderLine[], client: Cl
 }
 
 export function WholesaleOrderBuilder({ products }: { products: ProductLite[] }) {
+  // Redeploy marker: non-functional comment for triggering a new build.
   const [query, setQuery] = useState("");
   const [lines, setLines] = useState<OrderLine[]>([]);
   const [expandedProducts, setExpandedProducts] = useState<Record<string, boolean>>({});
