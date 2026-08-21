@@ -80,12 +80,13 @@ export async function POST(request: NextRequest) {
     });
 
     const pdfBuffer = Buffer.from(body.pdfBase64, "base64");
-    const pdfBlob = new Blob([pdfBuffer], { type: "application/pdf" });
-    payload.append("attachment", pdfBlob, body.pdfFileName || `${body.orderNumber || "comanda"}.pdf`);
+    const pdfFileName = body.pdfFileName || `${body.orderNumber || "comanda"}.pdf`;
+    const pdfFile = new File([pdfBuffer], pdfFileName, { type: "application/pdf" });
+    payload.append("attachment", pdfFile);
 
     const response = await fetch(WHOLESALE_FORMSUBMIT_ENDPOINT, {
       method: "POST",
-      headers: { Accept: "application/json" },
+      headers: { Accept: "text/html,application/json" },
       body: payload,
     });
 
@@ -96,8 +97,8 @@ export async function POST(request: NextRequest) {
     } catch {
       data = {};
     }
-    const successByBody = data.success === "true" || /thanks|thank you|sent/i.test(raw);
-    if (!response.ok && !successByBody) {
+    const successByBody = data.success === "true" || /thanks|thank you|sent|success/i.test(raw);
+    if (!response.ok || (!successByBody && raw.trim().length > 0 && !/thank|success/i.test(raw))) {
       const fallbackDetail = raw?.trim().slice(0, 220);
       return NextResponse.json(
         {
